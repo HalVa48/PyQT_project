@@ -4,10 +4,10 @@ import numpy as np
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from maindesign import Ui_MainWindow
 from design_dop import Ui_DopWindow
-from monotonicity_intervals import monotonicity_intervals
-from domain import linear_domain
-from OxOy import ox, oy
-
+from funcs.monotonicity_intervals import monotonicity_intervals
+from funcs.domain import linear_domain, range_of_values
+from funcs.OxOy import ox, oy
+from funcs.sign import sign
 
 class MyWidget(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -17,7 +17,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         self.pushButton_2.clicked.connect(self.result)
 
     def result(self):
-        self.res = Res()
+        self.res = Res(self.lineEdit_2.text())
         self.res.show()
 
     def run(self):
@@ -46,12 +46,16 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         self.graphicsView.plot(x_points, y_points, pen='r')
 
 class Res(QMainWindow, Ui_DopWindow):
-    def __init__(self):
+    def __init__(self, f):
         super().__init__()
         self.move(400, 200)
         self.setupUi(self)
-
-
+        self.label_2.setText(str(linear_domain(f)))
+        self.label_8.setText(str(range_of_values(f)))
+        self.label_4.setText(str(ox(f)))
+        self.label_10.setText(str(oy(f)))
+        self.label_6.setText(str(sign(f)))
+        self.label_12.setText(monotonicity_intervals(f))
 
 
 

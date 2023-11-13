@@ -17,7 +17,7 @@ def monotonicity_intervals(func):
     extrema.append(oo)
     extrema.sort()
 
-    intervals = []
+    intervals = ""
 
     for i in range(len(extrema) - 1):
         # get the middle of each interval
@@ -27,9 +27,9 @@ def monotonicity_intervals(func):
         result = df.subs(x, mid)
         if not result == sympy.nan:
             if result > 0:
-                intervals.append((extrema[i], extrema[i + 1], 'increasing'))
+                intervals += (f'{extrema[i]}, {extrema[i + 1]}, increasing \n')
             else:
-                intervals.append((extrema[i], extrema[i + 1], 'decreasing'))
+                intervals += (f'{extrema[i]}, {extrema[i + 1]}, decreasing \n')
 
     return intervals
 
